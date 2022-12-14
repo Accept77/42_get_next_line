@@ -1,0 +1,5 @@
+line 1 : Hello World!
+line 2 : hagisiru
+line 3 : HELPHELPHELPHELPHELPHELP
+line 4 : vim is best?
+line 5 : printf is hard

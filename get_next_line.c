@@ -6,7 +6,7 @@
 /*   By: jinsyang <jinsyang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 16:48:07 by jinsyang          #+#    #+#             */
-/*   Updated: 2022/12/15 15:53:27 by jinsyang         ###   ########.fr       */
+/*   Updated: 2022/12/15 17:24:14 by jinsyang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,16 @@ char	*get_next_line(int fd)
 		if (stay)
 		{
 			index = ft_strlen(stay);
-			ft_strlcpy(buf, stay, index);
+			ft_str_cpy(buf, stay, index);
+			free(stay);
 			stay = NULL;
 		}
 		else
 			index = read(fd, buf, BUFFER_SIZE);
-		if (index <= 0)
+		if (index < 0)
 			return (NULL);
+		else if(index == 0)
+			return (result);
 		while (i < index)
 		{
 			if (buf[i] == '\n')

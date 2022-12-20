@@ -6,7 +6,7 @@
 /*   By: jinsyang <jinsyang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 16:48:07 by jinsyang          #+#    #+#             */
-/*   Updated: 2022/12/19 19:45:50 by jinsyang         ###   ########.fr       */
+/*   Updated: 2022/12/20 16:31:05 by jinsyang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,17 @@ int	where_n(int i, char *buf, int *flag, int index)
 
 char	*result_is(char *result, char *buf, int i)
 {
-	if (result == NULL)
+	char	*tmp;
+
+	tmp = ft_strdup(result, ft_strlen(result));
+	free(result);
+	result = NULL;
+	if (tmp == NULL)
 		result = ft_strdup(buf, i);
 	else
-		result = ft_strjoin(result, buf, i);
+		result = ft_strjoin(tmp, buf, i);
+	free(tmp);
+	tmp = NULL;
 	return (result);
 }
 
@@ -54,9 +61,7 @@ char	*get_next_line2(char *result, char *buf, int fd, int flag)
 		}
 		else
 			index = read(fd, buf, BUFFER_SIZE);
-		if (index < 0)
-			return (NULL);
-		else if (index == 0)
+		if (index <= 0)
 			return (result);
 		i = where_n(i, buf, &flag, index);
 		if (i != index)

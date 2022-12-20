@@ -6,7 +6,7 @@
 /*   By: jinsyang <jinsyang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 16:49:12 by jinsyang          #+#    #+#             */
-/*   Updated: 2022/12/19 18:55:34 by jinsyang         ###   ########.fr       */
+/*   Updated: 2022/12/20 14:46:46 by jinsyang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*ft_strdup(char *s1, int index)
 
 	i = 0;
 	result = (char *) malloc(sizeof(char) * index + 1);
-	if (!(result))
+	if (!result)
 		return (NULL);
 	while (i < index)
 	{
@@ -92,11 +92,10 @@ char	*ft_strjoin(char *re, char *buf, int index)
 		return (((char *)re));
 	len_s1 = ft_strlen(re);
 	result = (char *)malloc(sizeof(char) * (len_s1 + index + 1));
-	if (!(result))
+	if (!result)
 		return (NULL);
 	ft_str_cpy(result, re, len_s1);
 	ft_str_cpy(result + len_s1, buf, index);
 	result[len_s1 + index] = '\0';
-	free(re);
 	return (result);
 }

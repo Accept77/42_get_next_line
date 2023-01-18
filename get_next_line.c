@@ -6,7 +6,7 @@
 /*   By: jinsyang <jinsyang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 16:48:07 by jinsyang          #+#    #+#             */
-/*   Updated: 2022/12/20 16:31:05 by jinsyang         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:59:33 by jinsyang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,10 @@ char	*get_next_line2(char *result, char *buf, int fd, int flag)
 		}
 		else
 			index = read(fd, buf, BUFFER_SIZE);
-		if (index <= 0)
+		if (index == 0 && result)
 			return (result);
+		else if (index <= 0)
+			return (NULL);
 		i = where_n(i, buf, &flag, index);
 		if (i != index)
 			stay = ft_strdup_stay(buf, i, index);

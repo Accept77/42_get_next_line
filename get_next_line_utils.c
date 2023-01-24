@@ -6,7 +6,7 @@
 /*   By: jinsyang <jinsyang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 16:49:12 by jinsyang          #+#    #+#             */
-/*   Updated: 2023/01/24 16:07:54 by jinsyang         ###   ########.fr       */
+/*   Updated: 2023/01/24 19:49:42 by jinsyang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,15 +70,12 @@ void	gnl_str_cpy(char *dst, char *src, size_t dstsize)
 	size_t	i;
 
 	i = 0;
-	if (dstsize > 0)
+	while (i < dstsize)
 	{
-		while (i < dstsize)
-		{
-			dst[i] = src[i];
-			i++;
-		}
-		dst[i] = '\0';
+		dst[i] = src[i];
+		i++;
 	}
+	dst[i] = '\0';
 }
 
 char	*gnl_strjoin(char *tmp, char *buf, int index)

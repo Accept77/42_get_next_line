@@ -6,81 +6,66 @@
 /*   By: jinsyang <jinsyang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 16:48:07 by jinsyang          #+#    #+#             */
-/*   Updated: 2023/01/18 17:59:33 by jinsyang         ###   ########.fr       */
+/*   Updated: 2023/01/24 15:59:02 by jinsyang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	where_n(int i, char *buf, int *flag, int index)
+char	*get_next_line(int fd)
 {
-	while (i < index)
-	{
-		if (buf[i] == '\n')
-		{
-			*flag = 0;
-			i++;
-			break ;
-		}
-		i++;
-	}
-	return (i);
-}
-
-char	*result_is(char *result, char *buf, int i)
-{
-	char	*tmp;
-
-	tmp = ft_strdup(result, ft_strlen(result));
-	free(result);
-	result = NULL;
-	if (tmp == NULL)
-		result = ft_strdup(buf, i);
-	else
-		result = ft_strjoin(tmp, buf, i);
-	free(tmp);
-	tmp = NULL;
-	return (result);
-}
-
-char	*get_next_line2(char *result, char *buf, int fd, int flag)
-{
+	char		*result = NULL;
+	char		buf[BUFFER_SIZE];
 	static char	*stay;
-	int			i;
 	int			index;
+	int			fd_index;
+	char		*tmp = NULL;
+	int		flag = 1;
 
 	while (flag)
 	{
-		i = 0;
+		index = 0;
+
 		if (stay)
 		{
-			index = ft_strlen(stay);
-			ft_str_cpy(buf, stay, index);
+			fd_index = gnl_strlen(stay);
+			gnl_str_cpy(buf, stay, fd_index);
 			free(stay);
 			stay = NULL;
 		}
 		else
-			index = read(fd, buf, BUFFER_SIZE);
-		if (index == 0 && result)
+			fd_index = read(fd, buf, BUFFER_SIZE);
+
+		if (fd_index == 0 && result)
 			return (result);
-		else if (index <= 0)
+		else if (fd_index <= 0)
 			return (NULL);
-		i = where_n(i, buf, &flag, index);
-		if (i != index)
-			stay = ft_strdup_stay(buf, i, index);
-		result = result_is(result, buf, i);
+
+		while (index < fd_index)
+		{	
+			if (buf[index] == '\n')
+			{
+				flag = 0;
+				index++;
+				break ;
+			}
+			index++;
+		}
+
+		if (index != fd_index)
+			stay = gnl_strdup_stay(buf, index, fd_index);
+
+		tmp = gnl_strdup(result, gnl_strlen(result));
+		free(result);
+		result = NULL;
+
+		if (tmp == NULL)
+			result = gnl_strdup(buf, index);
+		else
+			result = gnl_strjoin(tmp, buf, index);
+
+		free(tmp);
+		tmp = NULL;
 	}
-	return (result);
-}
-
-char	*get_next_line(int fd)
-{
-	char		*result;
-	char		buf[BUFFER_SIZE];
-	int			flag;
-
-	result = NULL;
-	flag = 1;
-	result = get_next_line2(result, buf, fd, flag);
 	return (result);
 }

@@ -6,13 +6,13 @@
 /*   By: jinsyang <jinsyang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 16:49:12 by jinsyang          #+#    #+#             */
-/*   Updated: 2023/01/18 17:39:55 by jinsyang         ###   ########.fr       */
+/*   Updated: 2023/01/24 16:07:54 by jinsyang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(char *str)
+size_t	gnl_strlen(char *str)
 {
 	size_t	count;
 
@@ -24,20 +24,20 @@ size_t	ft_strlen(char *str)
 	return (count);
 }
 
-char	*ft_strdup_stay(char *s1, int index, int total_size)
+char	*gnl_strdup_stay(char *buf, int index, int fd_index)
 {
 	char	*result;
 	int		len;
 	int		i;
 
 	i = 0;
-	len = total_size - index;
-	result = (char *) malloc(sizeof(char) * len + 1);
+	len = fd_index - index;
+	result = (char *)malloc(sizeof(char) * len + 1);
 	if (!result)
 		return (NULL);
 	while (i < len)
 	{
-		result[i] = s1[index];
+		result[i] = buf[index];
 		i++;
 		index++;
 	}
@@ -45,11 +45,13 @@ char	*ft_strdup_stay(char *s1, int index, int total_size)
 	return (result);
 }
 
-char	*ft_strdup(char *s1, int index)
+char	*gnl_strdup(char *s1, int index)
 {
 	char	*result;
 	int		i;
 
+	if (!s1)
+		return (NULL);
 	i = 0;
 	result = (char *) malloc(sizeof(char) * index + 1);
 	if (!result)
@@ -63,7 +65,7 @@ char	*ft_strdup(char *s1, int index)
 	return (result);
 }
 
-void	ft_str_cpy(char *dst, char *src, size_t dstsize)
+void	gnl_str_cpy(char *dst, char *src, size_t dstsize)
 {
 	size_t	i;
 
@@ -79,23 +81,16 @@ void	ft_str_cpy(char *dst, char *src, size_t dstsize)
 	}
 }
 
-char	*ft_strjoin(char *re, char *buf, int index)
+char	*gnl_strjoin(char *tmp, char *buf, int index)
 {
-	int		len_s1;
+	int		len_tmp;
 	char	*result;
 
-	if (!re && !buf)
-		return (NULL);
-	else if (!re)
-		return (((char *)buf));
-	else if (!buf)
-		return (((char *)re));
-	len_s1 = ft_strlen(re);
-	result = (char *)malloc(sizeof(char) * (len_s1 + index + 1));
+	len_tmp = gnl_strlen(tmp);
+	result = (char *)malloc(sizeof(char) * (len_tmp + index + 1));
 	if (!result)
 		return (NULL);
-	ft_str_cpy(result, re, len_s1);
-	ft_str_cpy(result + len_s1, buf, index);
-	result[len_s1 + index] = '\0';
+	gnl_str_cpy(result, tmp, len_tmp);
+	gnl_str_cpy(result + len_tmp, buf, index);
 	return (result);
 }

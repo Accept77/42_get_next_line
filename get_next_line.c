@@ -6,7 +6,7 @@
 /*   By: jinsyang <jinsyang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 16:48:07 by jinsyang          #+#    #+#             */
-/*   Updated: 2023/01/28 19:49:45 by jinsyang         ###   ########.fr       */
+/*   Updated: 2023/01/28 19:56:52 by jinsyang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ char	*get_next_line(int fd)
 		if (index != fd_index)
 			stay = gnl_strdup_stay(buf, index, fd_index);
 
-		result_len = gnl_strlen(result);
 		tmp = gnl_strdup(result, result_len); // !!!! tmp 필요함?
 		free(result);
 		result = NULL;
@@ -74,6 +73,7 @@ char	*get_next_line(int fd)
 			result = gnl_strjoin(tmp, buf, index, result_len); // !!!!
 		free(tmp);
 		tmp = NULL;
+		result_len = gnl_strlen(result);
 //		result_len += index;
 		if(!result)
 		{

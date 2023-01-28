@@ -6,7 +6,7 @@
 /*   By: jinsyang <jinsyang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 16:48:07 by jinsyang          #+#    #+#             */
-/*   Updated: 2023/01/24 19:46:38 by jinsyang         ###   ########.fr       */
+/*   Updated: 2023/01/28 19:49:45 by jinsyang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*get_next_line(int fd)
 	int			fd_index;
 	char		*tmp = NULL;
 	int		flag = 1;
-	int	result_len;
+	int	result_len = 0;
 
 	while (flag)
 	{
@@ -64,17 +64,18 @@ char	*get_next_line(int fd)
 			stay = gnl_strdup_stay(buf, index, fd_index);
 
 		result_len = gnl_strlen(result);
-		tmp = gnl_strdup(result, result_len);
+		tmp = gnl_strdup(result, result_len); // !!!! tmp 필요함?
 		free(result);
 		result = NULL;
 
 		if (tmp == NULL)
-			result = gnl_strdup(buf, index);
+			result = gnl_strdup(buf, index); //!!!! 아니면 dup뜯어보기?
 		else
-			result = gnl_strjoin(tmp, buf, index);
+			result = gnl_strjoin(tmp, buf, index, result_len); // !!!!
 		free(tmp);
 		tmp = NULL;
-		if (result == NULL)
+//		result_len += index;
+		if(!result)
 		{
 			free(stay);
 			stay = NULL;

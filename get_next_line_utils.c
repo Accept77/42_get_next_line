@@ -6,7 +6,7 @@
 /*   By: jinsyang <jinsyang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 16:49:12 by jinsyang          #+#    #+#             */
-/*   Updated: 2023/01/24 19:49:42 by jinsyang         ###   ########.fr       */
+/*   Updated: 2023/01/28 19:06:34 by jinsyang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,16 +78,14 @@ void	gnl_str_cpy(char *dst, char *src, size_t dstsize)
 	dst[i] = '\0';
 }
 
-char	*gnl_strjoin(char *tmp, char *buf, int index)
+char	*gnl_strjoin(char *tmp, char *buf, int index, int result_len)
 {
-	int		len_tmp;
 	char	*result;
 
-	len_tmp = gnl_strlen(tmp);
-	result = (char *)malloc(sizeof(char) * (len_tmp + index + 1));
+	result = (char *)malloc(sizeof(char) * (result_len + index + 1));
 	if (!result)
 		return (NULL);
-	gnl_str_cpy(result, tmp, len_tmp);
-	gnl_str_cpy(result + len_tmp, buf, index);
+	gnl_str_cpy(result, tmp, result_len); // 아니면 여기? 카피를 2번?
+	gnl_str_cpy(result + result_len, buf, index);
 	return (result);
 }

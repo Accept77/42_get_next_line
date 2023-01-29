@@ -6,7 +6,7 @@
 /*   By: jinsyang <jinsyang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 16:49:12 by jinsyang          #+#    #+#             */
-/*   Updated: 2023/01/28 19:06:34 by jinsyang         ###   ########.fr       */
+/*   Updated: 2023/01/29 16:38:47 by jinsyang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,12 @@ char	*gnl_strdup(char *s1, int index)
 	result = (char *) malloc(sizeof(char) * index + 1);
 	if (!result)
 		return (NULL);
-	while (i < index)
+	if (index == 0)
+	{
+		result[0] = '\0';
+		return (result);
+	}
+	while (i < index && s1[i])
 	{
 		result[i] = s1[i];
 		i++;
@@ -85,7 +90,7 @@ char	*gnl_strjoin(char *tmp, char *buf, int index, int result_len)
 	result = (char *)malloc(sizeof(char) * (result_len + index + 1));
 	if (!result)
 		return (NULL);
-	gnl_str_cpy(result, tmp, result_len); // 아니면 여기? 카피를 2번?
+	gnl_str_cpy(result, tmp, result_len);
 	gnl_str_cpy(result + result_len, buf, index);
 	return (result);
 }

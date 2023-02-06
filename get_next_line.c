@@ -6,7 +6,7 @@
 /*   By: jinsyang <jinsyang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 16:48:07 by jinsyang          #+#    #+#             */
-/*   Updated: 2023/02/06 15:27:36 by jinsyang         ###   ########.fr       */
+/*   Updated: 2023/02/06 16:13:44 by jinsyang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*get_next_line(int fd)
 	int		result_len = 0;
 	static char	*stay;
 	int			index;
-	int			fd_index;
+	int			fd_index = 0;
 	int			flag = 1;
 	char	*tmp;
 
@@ -28,8 +28,11 @@ char	*get_next_line(int fd)
 		index = 0;
 		if (stay)
 		{
-			fd_index = gnl_strlen(stay);
-			gnl_str_cpy(buf, stay, fd_index);
+			while (stay[fd_index])
+			{
+				buf[fd_index] = stay[fd_index];
+				fd_index++;
+			}
 			free(stay);
 			stay = NULL;
 		}
@@ -54,7 +57,7 @@ char	*get_next_line(int fd)
 			index++;
 		}
 		if (index != fd_index)
-			stay = gnl_strdup_stay(buf, index, fd_index);
+			stay = gnl_strdup(buf + index, fd_index - index);
 		tmp = gnl_strdup(result, result_len);
 		free(result);
 		result = NULL;

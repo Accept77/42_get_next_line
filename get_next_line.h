@@ -6,7 +6,7 @@
 /*   By: jinsyang <jinsyang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 16:49:22 by jinsyang          #+#    #+#             */
-/*   Updated: 2023/01/29 17:53:21 by jinsyang         ###   ########.fr       */
+/*   Updated: 2023/02/06 16:13:41 by jinsyang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@
 # endif
 
 char	*get_next_line(int fd);
-size_t	gnl_strlen(char *str);
-char	*gnl_strdup_stay(char *buf, int index, int fd_index);
 char	*gnl_strdup(char *s1, int index);
-void	gnl_str_cpy(char *dst, char *src, size_t dstsize);
 char	*gnl_strjoin(char *tmp, char *buf, int index, int result_len);
 
 #endif

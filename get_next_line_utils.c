@@ -6,11 +6,13 @@
 /*   By: jinsyang <jinsyang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 16:49:12 by jinsyang          #+#    #+#             */
-/*   Updated: 2023/02/06 16:13:34 by jinsyang         ###   ########.fr       */
+/*   Updated: 2023/02/06 17:49:24 by jinsyang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+
 
 char	*gnl_strdup(char *s1, int index)
 {

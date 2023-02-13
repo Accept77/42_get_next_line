@@ -6,13 +6,11 @@
 /*   By: jinsyang <jinsyang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 16:49:12 by jinsyang          #+#    #+#             */
-/*   Updated: 2023/02/06 17:49:24 by jinsyang         ###   ########.fr       */
+/*   Updated: 2023/02/13 19:00:34 by jinsyang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-
 
 char	*gnl_strdup(char *s1, int index)
 {
@@ -65,4 +63,38 @@ char	*gnl_strjoin(char *tmp, char *buf, int index, int result_len)
 	}
 	result[j] = '\0';
 	return (result);
+}
+
+char	*result_is(char *result, int result_len, char *buf, int index)
+{
+	char	*tmp;
+
+	tmp = gnl_strdup(result, result_len);
+	free(result);
+	result = NULL;
+	if (tmp == NULL)
+		result = gnl_strdup(buf, index);
+	else
+		result = gnl_strjoin(tmp, buf, index, result_len);
+	free(tmp);
+	tmp = NULL;
+	return (result);
+}
+
+int where_n(char *buf, int fd_index, int *flag)
+{
+	int index;
+
+	index = 0;
+	while (index < fd_index)
+	{
+		if(buf[index] == '\n')
+		{
+			*flag = 0;
+			index++;
+			break ;
+		}
+		index++;
+	}
+	return(index);
 }

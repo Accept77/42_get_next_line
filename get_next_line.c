@@ -6,27 +6,24 @@
 /*   By: jinsyang <jinsyang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 16:48:07 by jinsyang          #+#    #+#             */
-/*   Updated: 2023/02/06 17:45:03 by jinsyang         ###   ########.fr       */
+/*   Updated: 2023/02/13 19:08:38 by jinsyang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*get_next_line(int fd)
+char	*get_next_line2(char *result, int fd, int fd_index, int result_len)
 {
-	char	*result = NULL;
 	char	buf[BUFFER_SIZE];
-	int		result_len = 0;
 	static char	*stay;
 	int			index;
-	int			fd_index = 0;
-	int			flag = 1;
-	char	*tmp;
+	int			flag;
 
+	flag = 1;
 	while (flag)
 	{
 		index = 0;
-		if (stay) // 1번
+		if (stay)
 		{
 			while (stay[fd_index])
 			{
@@ -45,34 +42,29 @@ char	*get_next_line(int fd)
 			free(result);
 			return (NULL);
 		}
-		while (index < fd_index)
-		{
-			if (buf[index] == '\n')
-			{
-				flag = 0;
-				index++;
-				break ;
-			}
-			index++;
-		}
-		if (index != fd_index) // 1번 하고 while 종료
+		index = where_n(buf, fd_index, &flag);
+		if (index != fd_index)
 			stay = gnl_strdup(buf + index, fd_index - index);
-		tmp = gnl_strdup(result, result_len);
-		free(result);
-		result = NULL;
-		if (tmp == NULL)
-			result = gnl_strdup(buf, index);
-		else
-			result = gnl_strjoin(tmp, buf, index, result_len);
-		free(tmp);
-		tmp = NULL;
+		result = result_is(result, result_len, buf, index);
 		result_len += index;
-		if (!result) // 여기도?
+		if (!result)
 		{
 			free(stay);
 			stay = NULL;
 			return (NULL);
 		}
 	}
+	return (result);
+}
+
+char	*get_next_line(int fd)
+{
+	char	*result = NULL;
+	int		result_len;
+	int			fd_index;
+
+	result_len = 0;
+	fd_index = 0;
+	result = get_next_line2(result, fd, fd_index, result_len);
 	return (result);
 }

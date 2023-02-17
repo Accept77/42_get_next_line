@@ -6,7 +6,7 @@
 /*   By: jinsyang <jinsyang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 16:49:12 by jinsyang          #+#    #+#             */
-/*   Updated: 2023/02/13 19:00:34 by jinsyang         ###   ########.fr       */
+/*   Updated: 2023/02/17 13:50:27 by jinsyang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,30 +65,31 @@ char	*gnl_strjoin(char *tmp, char *buf, int index, int result_len)
 	return (result);
 }
 
-char	*result_is(char *result, int result_len, char *buf, int index)
+char	*result_is(char *result, int *result_len, char *buf, int index)
 {
 	char	*tmp;
 
-	tmp = gnl_strdup(result, result_len);
+	tmp = gnl_strdup(result, *result_len);
 	free(result);
 	result = NULL;
 	if (tmp == NULL)
 		result = gnl_strdup(buf, index);
 	else
-		result = gnl_strjoin(tmp, buf, index, result_len);
+		result = gnl_strjoin(tmp, buf, index, *result_len);
 	free(tmp);
 	tmp = NULL;
+	*result_len += index;
 	return (result);
 }
 
-int where_n(char *buf, int fd_index, int *flag)
+int	where_n(char *buf, int fd_index, int *flag)
 {
-	int index;
+	int	index;
 
 	index = 0;
 	while (index < fd_index)
 	{
-		if(buf[index] == '\n')
+		if (buf[index] == '\n')
 		{
 			*flag = 0;
 			index++;
@@ -96,5 +97,5 @@ int where_n(char *buf, int fd_index, int *flag)
 		}
 		index++;
 	}
-	return(index);
+	return (index);
 }

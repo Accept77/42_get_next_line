@@ -6,7 +6,7 @@
 /*   By: jinsyang <jinsyang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 16:49:12 by jinsyang          #+#    #+#             */
-/*   Updated: 2023/02/22 18:49:18 by jinsyang         ###   ########.fr       */
+/*   Updated: 2023/02/25 15:44:17 by jinsyang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,6 @@ char	*result_is(char *result, int *result_len, char *buf, int index)
 {
 	char	*tmp;
 
-	if (BUFFER_SIZE == 1 && buf[0] == '\n')
-		index--;
 	tmp = gnl_strdup(result, *result_len);
 	free(result);
 	result = NULL;
@@ -84,7 +82,7 @@ char	*result_is(char *result, int *result_len, char *buf, int index)
 	return (result);
 }
 
-int	where_n(char *buf, int fd_index)
+int	where_n(char *buf, int fd_index, int *flag)
 {
 	int	index;
 
@@ -93,9 +91,8 @@ int	where_n(char *buf, int fd_index)
 	{
 		if (buf[index] == '\n')
 		{
+			*flag = 0;
 			index++;
-			if (BUFFER_SIZE == 1)
-				index++;
 			break ;
 		}
 		index++;

@@ -6,7 +6,7 @@
 /*   By: jinsyang <jinsyang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 16:48:07 by jinsyang          #+#    #+#             */
-/*   Updated: 2023/02/25 15:41:05 by jinsyang         ###   ########.fr       */
+/*   Updated: 2023/02/25 15:54:41 by jinsyang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@ void	free_all(char **str)
 	free(*str);
 	*str = NULL;
 }
+
 char	*fill_buf(char *buf, char *stay, int *fd_index)
 {
-	int index;
+	int	index;
 
 	index = 0;
 	while (stay[index] != '\0')
@@ -46,12 +47,10 @@ char	*get_next_line2(char *result, int fd, int fd_index, int result_len)
 			stay = fill_buf(buf, stay, &fd_index);
 		else
 			fd_index = read(fd, buf, BUFFER_SIZE);
+		if (fd_index < 0)
+			free_all(&result);
 		if (fd_index <= 0)
-		{
-			if (fd_index < 0)
-				free_all(&result);
 			return (result);
-		}
 		index = where_n(buf, fd_index, &flag);
 		if (index != fd_index && BUFFER_SIZE != 1)
 			stay = gnl_strdup(buf + index, fd_index - index);

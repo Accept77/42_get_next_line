@@ -6,14 +6,15 @@
 /*   By: jinsyang <jinsyang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 16:48:07 by jinsyang          #+#    #+#             */
-/*   Updated: 2023/02/25 15:54:41 by jinsyang         ###   ########.fr       */
+/*   Updated: 2023/04/24 14:56:45 by jinsyang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void	free_all(char **str)
+void	free_and_null(char **str, int *flag)
 {
+	*flag = 0;
 	free(*str);
 	*str = NULL;
 }
@@ -48,7 +49,7 @@ char	*get_next_line2(char *result, int fd, int fd_index, int result_len)
 		else
 			fd_index = read(fd, buf, BUFFER_SIZE);
 		if (fd_index < 0)
-			free_all(&result);
+			free_and_null(&result, &flag);
 		if (fd_index <= 0)
 			return (result);
 		index = where_n(buf, fd_index, &flag);
@@ -56,7 +57,7 @@ char	*get_next_line2(char *result, int fd, int fd_index, int result_len)
 			stay = gnl_strdup(buf + index, fd_index - index);
 		result = result_is(result, &result_len, buf, index);
 		if (!result)
-			free_all(&stay);
+			free_and_null(&stay, &flag);
 	}
 	return (result);
 }

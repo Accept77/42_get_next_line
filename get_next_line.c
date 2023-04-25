@@ -6,7 +6,7 @@
 /*   By: jinsyang <jinsyang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 16:48:07 by jinsyang          #+#    #+#             */
-/*   Updated: 2023/04/24 14:56:45 by jinsyang         ###   ########.fr       */
+/*   Updated: 2023/04/25 19:09:04 by jinsyang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ char	*get_next_line(int fd)
 	int		result_len;
 	int		fd_index;
 
+	if (BUFFER_SIZE <= 0)
+		return (NULL);
 	result = NULL;
 	result_len = 0;
 	fd_index = 0;
